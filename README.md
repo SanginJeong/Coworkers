@@ -1,163 +1,133 @@
-<img src="https://private-user-images.githubusercontent.com/169524126/521039880-a378be81-f539-4529-8701-5d3b4193c61a.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjQ3MTM3NjAsIm5iZiI6MTc2NDcxMzQ2MCwicGF0aCI6Ii8xNjk1MjQxMjYvNTIxMDM5ODgwLWEzNzhiZTgxLWY1MzktNDUyOS04NzAxLTVkM2I0MTkzYzYxYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMjAyJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTIwMlQyMjExMDBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xNWEyNjIyOTQwYTI2N2UxNzgwOWM0YmI4MGU3OWFiNGM5MzBjOWJlYzI4YmM2NGIzODNjMTI4ZTlhNmY5NzNjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.BE_HfjAFrPsqCscLqHEWbj5m0chUyUMMFQH7BIqVHo8" />
-
 # Coworkers
+팀단위 업무 배정 및 현황 공유 서비스
 
-### 팀원
+## 프로젝트 선정 이유
 
-|        [@SanginJeong](https://github.com/SanginJeong)        |        [@KimWonSeon](https://github.com/KimWonSeon)         |          [@wlrnjs](https://github.com/wlrnjs)           |
-| :----------------------------------------------------------: | :---------------------------------------------------------: | :-----------------------------------------------------: |
-| <img src="https://github.com/SanginJeong.png" width="150" /> | <img src="https://github.com/KimWonSeon.png" width="150" /> | <img src="https://github.com/wlrnjs.png" width="150" /> |
-|                       **정상인 / PL**                        |                       **김원선 / FE**                       |                     **서지권 / FE**                     |
+기존 협업 과정에서는 **메신저, Notion, Github, Figma 등 여러 서비스가 기능별로 분산되어 있어** 앱을 계속 이동하면서 작업 해야하는 번거롭다는 불편함이 있었습니다.
+이러한 불편함을 해소하기 위해서 필요한 핵심 기능들만 모아놓은 업무 관리 서비스를 만들어보면 좋을 것 같아서 주어진 주제들 중 Coworkers를 선택하게 되었습니다.
 
-## 기술 스택
+## 맡은 역할
 
-### Core
+### 재사용성 있는 공통컴포넌트 개발 
+- [Button](https://github.com/SanginJeong/Coworkers/tree/develop/src/common/Button)
+- [Dropdown](https://github.com/SanginJeong/Coworkers/tree/develop/src/common/Dropdown)
+- [Icon](https://github.com/SanginJeong/Coworkers/tree/develop/src/common/Icon)
+- [Modal](https://github.com/SanginJeong/Coworkers/tree/develop/src/common/Modal)
+- [ProgressBadge](https://github.com/SanginJeong/Coworkers/tree/develop/src/common/ProgressBadge)
+- [ProgressBar](https://github.com/SanginJeong/Coworkers/tree/develop/src/common/ProgressBar)
+- [Select](https://github.com/SanginJeong/Coworkers/tree/develop/src/common/Select)
 
-- **Framework**: Next.js 16.0.1 (App Router)
-- **Language**: TypeScript 5.x
-- **Styling**: Tailwind CSS 3.4.18
-- **State Management**:
-  - React Query 5.x (TanStack Query)
-  - Zustand 5.x
-- **API**: Axios 1.13.1
-- **Animation**:
-  - Framer Motion 12.x
-  - GSAP 3.13.0
-- **UI Components**:
-  - React Calendar 6.x
-  - React Hot Toast 2.x
+### 페이지 개발
+- [자유게시판(게시글 목록)](https://github.com/SanginJeong/Coworkers/tree/develop/src/app/dashboard)
+- [자유게시판](https://github.com/SanginJeong/Coworkers/tree/develop/src/app/(route)/dashboard)
+- [팀페이지, 팀 상세페이지](https://github.com/SanginJeong/Coworkers/tree/develop/src/app/(route)/team)
 
-### Development
+## 개선 경험
 
-- **Documentation**: Storybook 10.x
-- **Linting**:
-  - ESLint 9.x
-  - Prettier 3.6.2
-- **Husky**:
-  - Husky 9.x
-  - lint-staged 16.x
-- **UI Testing**:
-  - Chromatic
-  - Storybook Test Runner
+### 권한 기반 접근 제어 및 UI 개선
+기존에는 페이지 컴포넌트 내에서 권한 검사 후 redirect 시키는 로직에서는 이 때 해당 url 페이지에서 검사를 하기 때문에 화면 깜빡임 문제가 있었습니다. 
+**Next.js Middleware를 활용하여 인증/권한 검사를 선처리**하도록 구조를 개선했습니다. [middleware.ts](https://github.com/SanginJeong/Coworkers/blob/develop/src/middleware.ts)
+```jsx
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-## 주요 기능
+export async function middleware(req: NextRequest) {
+  const token = req.cookies.get("accessToken")?.value;
 
-### 인증
+  const { pathname } = req.nextUrl;
 
-- JWT 기반 인증
-- 카카오 소셜 로그인 연동
-- 이메일/비밀번호 로그인
-- 자동 로그인 유지
+  const authRoutes = ["/login", "/signup", "/reset-password"];
 
-### 상태 관리
+  if (token && authRoutes.includes(pathname)) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 
-- **서버 상태 관리**: React Query (TanStack Query)
-- **클라이언트 상태 관리**: Zustand
+  const protectedRoutes = ["/my-page", "/my-history", "/team", "/team-creation", "/team-join", "/dashboard"];
 
-### 성능 최적화
+  if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
 
-- **이미지 최적화**:
-  - Next.js Image 컴포넌트를 활용한 자동 최적화
-  - WebP 포맷 지원을 통한 용량 감소
-  - Lazy Loading 적용
+  if (!token && req.nextUrl.pathname.startsWith("/team")) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
 
-- **번들 최적화**:
-  - 코드 스플리팅 (Code Splitting)
-  - 동적 임포트(dynamic import)를 활용한 지연 로딩
-  - Tree Shaking을 통한 미사용 코드 제거
-  - Webpack 설정 최적화 (--webpack 플래그 사용)
+  if (token && req.nextUrl.pathname === "/team") {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
 
-- **애니메이션**:
-  - GSAP: 스크롤 기반 애니메이션 구현
-  - Framer Motion: 인터랙티브한 UI 컴포넌트 구현
+    if (res.ok) {
+      const data = await res.json();
+      const groupId = data.memberships?.[0]?.groupId;
 
-### 테스트
+      if (groupId) {
+        return NextResponse.redirect(new URL(`/team/${groupId}`, req.url));
+      }
+    }
+  }
 
-- **시각적 테스팅**: Chromatic을 활용한 UI 컴포넌트 시각적 테스트
-- **컴포넌트 문서화**: Storybook을 활용한 컴포넌트 문서화 및 개발
-- **접근성 검사**: Storybook a11y 애드온을 활용한 접근성 점검
+  if (token && req.nextUrl.pathname.startsWith("/team/")) {
+    const teamId = req.nextUrl.pathname.split("/")[2];
 
-## 개발 환경 설정
+    if (!teamId) {
+      return NextResponse.next();
+    }
 
-```bash
-# 저장소 클론
-git clone https://github.com/sprint18-4-4/Coworkers.git
-cd Coworkers
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/groups/${teamId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
 
-# 의존성 설치
-npm install
+    if (!res.ok) {
+      return NextResponse.redirect(new URL("/team", req.url));
+    }
+  }
 
-# 환경 변수 설정
-cp .env.local.example .env.local
-# .env.local 파일 수정
-
-# 개발 서버 실행
-npm run dev
-```
-
-## 스크립트
-
-```json
-{
-  "dev": "next dev --webpack",
-  "build": "next build --webpack",
-  "start": "next start",
-  "lint": "eslint",
-  "storybook": "storybook dev -p 6006",
-  "build-storybook": "storybook build",
-  "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
-  "build-all": "npm run build && npm run build-storybook"
+  return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/team/:path*", "/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
 ```
 
-## 컨벤션
+그 결과 아래와 같은 효과를 얻을 수 있었습니다.
+- 인증되지 않은 사용자의 페이지 접근을 사전에 차단
+- 중복된 권한 체크 로직 제거
+- 화면 깜빡임 문제 해결
 
-### Git 커밋 메시지
 
-```plaintext
-- feat: 새로운 기능 추가
-- fix: 버그 수정
-- design: UI/UX 및 스타일 변경
-- docs: 문서 작성 또는 수정
-- refactor: 코드 리팩토링 (기능 변화 없음)
-- chore: 설정, 빌드, 패키지 등 유지보수
-- test: 테스트 코드 및 주석 추가/수정
-- hotfix: 긴급 버그 수정
-- review: 코드 리뷰 요청
-- performance: 성능 최적화
-- main: 메인 브랜치 관련 변경 (배포 등)
+### Debounce
+게시글 검색 기능에서 입력 완료 후 페이지가 이동하는 것이 아닌 입력할 때마다 검색 이벤트를 실행시켜서 결과를 보여주고 싶었습니다. 하지만 입력마다 요청을 보내는 점이 무겁게 느껴질 수 있기 때문에 Debounce 기법으로 검색 기능을 개선했습니다.
+[useDebounce.ts](https://github.com/SanginJeong/Coworkers/blob/develop/src/hooks/useDebounce.ts)
+```jsx
+import { useEffect, useState } from "react";
+
+const useDebounce = <T>(value: T, delay = 200): T => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
+export default useDebounce;
 ```
-
-### 코드 스타일
-
-- 컴포넌트: PascalCase (예: `UserProfile.tsx`)
-- util 함수: camelCase (예: `formatDate.ts`)
-- 상수: UPPER_SNAKE_CASE (예: `API_ENDPOINT.ts`)
-
-### 폴더 구조
-
-```plaintext
-├── src
-│   ├── api
-│   │   ├── axios.ts
-│   │   └── hooks.ts
-│   ├── app
-│   │   └── login
-│   │       ├── _components
-│   │       ├── _hooks
-│   │       ├── _types
-│   │       ├── _constants
-│   │       └── page.tsx
-│   ├── constants
-│   │   └── 공통 상수
-│   ├── common
-│   │   └── 공통 컴포넌트
-│   ├── hooks
-│   │   └── 공통 훅
-│   ├── types
-│   │   └── 공통 타입
-│   └── utils
-│       └── 공통 유틸
-├── public
-└── package.json
-```
+## 좋았던 점
+- 새로 학습한 기술을 빠르게 도입하고 장단점을 체득할 수 있었습니다. (React Compiler, App Router)
+- 협업 시 편리한 git hook을 활용한 자동화 및 테스트를 세팅하는 방법을 배우게 되었습니다.
+- 팀원들과 매일 오랜시간 회의를 거치면서 프로젝트의 방향을 조정하고, 기술적으로도 토론을 했던 점이 학습하는데에 많은 도움이 되었습니다.
+## 아쉬운 점
+- App Router의 숙련도가 부족했습니다.
+- 프로젝트 설계상 권한이 필요한 페이지가 많아서 동적 메타 데이터를 작성해줄만한 페이지가 없었습니다.
+- device 크기에 따른 반응형 사이즈를 mobile, tablet, pc 로 나눠서 구현했으나, 경계선에서 깨지는 경우가 많았습니다. mobile, tablet, desktop, pc 4가지로 나누었다면 반응형 UI를 조금 더 디테일하게 구현할 수 있었을 것 같다고 느꼈습니다.
