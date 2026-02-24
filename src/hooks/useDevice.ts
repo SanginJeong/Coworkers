@@ -13,7 +13,7 @@ const useDevice = () => {
 
     const queries = {
       mobile: "(max-width: 430px)",
-      tablet: "(min-width: 431px) and (max-width: 744px)",
+      tablet: "(min-width: 431px) and (max-width: 939px)",
       pc: "(min-width: 940px)",
     };
 

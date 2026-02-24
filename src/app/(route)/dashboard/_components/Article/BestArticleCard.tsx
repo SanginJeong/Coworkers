@@ -13,7 +13,7 @@ const BestArticleCard = ({ article }: { article: ArticleListItem }) => {
       <article className="h-full flex flex-col gap-3 pc:gap-4 rounded-[20px] border bg-background-primary px-5 py-6">
         <ArticleBestBadge />
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 flex-1">
           <ArticleTitle title={article?.title} />
           <ArticleContent content={article?.content} image={article.image} imgSize={60} layout="row" />
         </div>

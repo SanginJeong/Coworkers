@@ -8,8 +8,8 @@ interface ArticleWriterProps {
 const ArticleWriter = ({ nickname, createdAt }: ArticleWriterProps) => {
   const date = formatTime(createdAt);
   return (
-    <span className="flex items-center gap-2">
-      <span className="text-md-medium text-text-primary">{nickname}</span>
+    <span className="flex items-center gap-2 min-w-0 overflow-hidden">
+      <span className="text-md-medium text-text-primary truncate">{nickname}</span>
       <hr className="border border-text-primary h-3" />
       <span className="text-md-medium text-state-400">{date}</span>
     </span>
