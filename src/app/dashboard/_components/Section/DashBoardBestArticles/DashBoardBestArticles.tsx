@@ -11,7 +11,7 @@ const DashBoardBestArticles = () => {
   const [page, setPage] = useState(1);
   const pageSize = isMobile ? 1 : isTablet ? 2 : 3;
 
-  const { data: articles } = useGetArticles({ page, pageSize, orderBy: "recent" });
+  const { data: articles } = useGetArticles({ page, pageSize, orderBy: "like" });
 
   if (!articles) {
     return null;
@@ -26,7 +26,7 @@ const DashBoardBestArticles = () => {
         <ul className="grid grid-cols-1 tablet:grid-cols-2 pc:grid-cols-3 gap-4 items-stretch">
           {articles?.list.map((article) => (
             <li className="h-full" key={article.id}>
-              <BestArticleCard articleId={article.id} />
+              <BestArticleCard article={article} />
             </li>
           ))}
         </ul>

@@ -1,21 +1,15 @@
 import Link from "next/link";
-import { useGetArticle } from "@/api/hooks";
 import { Icon } from "@/common";
+import { ArticleListItem } from "@/types/ArticleType";
 import ArticleBestBadge from "./_internal/ArticleBestBadge";
 import ArticleTitle from "./_internal/ArticleTitle";
 import ArticleContent from "./_internal/ArticleContent";
 import ArticleWriter from "./_internal/ArticleWriter";
 import ArticleLike from "./_internal/ArticleLike";
 
-const BestArticleCard = ({ articleId }: { articleId: number }) => {
-  const { data: article } = useGetArticle({ articleId });
-
-  if (!article) {
-    return null;
-  }
-
+const BestArticleCard = ({ article }: { article: ArticleListItem }) => {
   return (
-    <Link href={`/dashboard/${articleId}`} className="block">
+    <Link href={`/dashboard/${article.id}`} className="block">
       <article className="h-full flex flex-col gap-3 pc:gap-4 rounded-[20px] border bg-background-primary px-5 py-6">
         <ArticleBestBadge />
 

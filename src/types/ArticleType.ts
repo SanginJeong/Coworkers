@@ -8,13 +8,13 @@ interface ArticleBase {
   };
   image: string;
   title: string;
+  content: string;
   id: number;
 }
 
 export type ArticleListItem = ArticleBase;
 
 export interface ArticleDetail extends ArticleBase {
-  content: string;
   commentCount: number;
   isLiked: boolean;
 }

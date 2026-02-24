@@ -1,18 +1,12 @@
 import Link from "next/link";
-import { useGetArticle } from "@/api/hooks";
 import { Icon } from "@/common";
+import { ArticleListItem } from "@/types/ArticleType";
 import ArticleTitle from "./_internal/ArticleTitle";
 import ArticleContent from "./_internal/ArticleContent";
 import ArticleWriter from "./_internal/ArticleWriter";
 import ArticleLike from "./_internal/ArticleLike";
 
-const DefaultArticleCard = ({ articleId }: { articleId: number }) => {
-  const { data: article } = useGetArticle({ articleId });
-
-  if (!article) {
-    return null;
-  }
-
+const DefaultArticleCard = ({ article }: { article: ArticleListItem }) => {
   return (
     <Link href={`/dashboard/${article.id}`} className="block">
       <article className="flex flex-col gap-3 w-full pc:gap-4 rounded-[20px] border bg-background-primary px-5 py-6">
