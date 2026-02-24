@@ -16,7 +16,10 @@ const DashboardPage = () => {
         <DashBoardBestArticles />
         <DashBoardAllArticles />
         <Link href="/dashboard/write" className="block">
-          <FloatingButton iconName="pencil" className="fixed right-4 bottom-4 tablet:right-6 tablet:bottom-6 pc:right-10 pc:bottom-10" />
+          <FloatingButton
+            iconName="pencil"
+            className="fixed right-4 bottom-4 tablet:right-6 tablet:bottom-6 pc:right-10 pc:bottom-10"
+          />
         </Link>
       </section>
     </PageLayout>

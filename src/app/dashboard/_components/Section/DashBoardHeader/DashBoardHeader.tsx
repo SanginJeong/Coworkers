@@ -1,11 +1,33 @@
 "use client";
 
+import { useEffect } from "react";
 import { Icon } from "@/common";
 import { useArticleSearchStore } from "@/stores";
 import { cn } from "@/utils";
 
 const DashBoardHeader = () => {
   const { keyword, setKeyword } = useArticleSearchStore();
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development") return;
+
+    import("web-vitals/attribution").then(({ onINP }) => {
+      onINP(
+        (metric) => {
+          const color =
+            metric.rating === "good"
+              ? "color: green"
+              : metric.rating === "needs-improvement"
+                ? "color: orange"
+                : "color: red";
+          console.groupCollapsed(`%c[INP] ${metric.value}ms (${metric.rating})`, color);
+          console.log("attribution:", metric.attribution);
+          console.groupEnd();
+        },
+        { reportAllChanges: true },
+      );
+    });
+  }, []);
 
   return (
     <header className="flex flex-col gap-5 pc:flex-row pc:justify-between pc:items-center">
