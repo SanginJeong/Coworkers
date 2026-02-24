@@ -71,7 +71,7 @@ const config: Config = {
       },
 
       fontFamily: {
-        pretendard: ["Pretendard"],
+        pretendard: ["Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "sans-serif"],
       },
 
       fontSize: {

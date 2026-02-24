@@ -8,6 +8,7 @@ import { Sidebar } from "@/common";
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
   variable: "--font-pretendard",
+  fallback: ["Apple SD Gothic Neo", "Malgun Gothic", "sans-serif"],
 });
 
 export const metadata: Metadata = {
