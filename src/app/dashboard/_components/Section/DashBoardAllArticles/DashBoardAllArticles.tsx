@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const DashBoardAllArticles = () => {
   const [orderBy, setOrderBy] = useState<"recent" | "like">("recent");
   const { keyword } = useArticleSearchStore();
-  const debouncedValue = useDebounce(keyword);
+  const debouncedValue = useDebounce(keyword, 300);
 
   const options: SelectOption<"recent" | "like">[] = [
     { label: "최신순", value: "recent" },
@@ -35,11 +35,12 @@ const DashBoardAllArticles = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!observerRef.current || !hasNextPage) return;
+    const target = observerRef.current;
+    if (!target || !hasNextPage) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        if (entry.isIntersecting) {
           fetchNextPage();
         }
       },
@@ -49,10 +50,10 @@ const DashBoardAllArticles = () => {
       },
     );
 
-    observer.observe(observerRef.current);
+    observer.observe(target);
 
     return () => observer.disconnect();
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [fetchNextPage, hasNextPage]);
 
   return (
     <div className="mt-10">
